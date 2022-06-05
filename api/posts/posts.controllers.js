@@ -5,7 +5,7 @@ exports.postsCreate = async (req, res) => {
     const newPost = await Post.create(req.body);
     res.status(201).json(newPost);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
@@ -20,7 +20,7 @@ exports.postsDelete = async (req, res) => {
       res.status(404).json({ message: 'post not found' });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
@@ -35,7 +35,7 @@ exports.postsUpdate = async (req, res) => {
       res.status(404).json({ message: 'post not found' });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
@@ -44,6 +44,15 @@ exports.postsGet = async (req, res) => {
     const posts = await Post.find();
     res.json(posts);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
+  }
+};
+
+exports.fetchPost = async (req, res) => {
+  try {
+    const posts = await Post.find();
+    res.json(posts);
+  } catch (error) {
+    next(error);
   }
 };
